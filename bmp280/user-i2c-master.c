@@ -9,7 +9,13 @@
 #include <linux/i2c-dev.h>
 #include <i2c/smbus.h>
 
+#include <sys/fcntl.h>
+#include <sys/stat.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
+
 
 /**
  * i2c_smbus_read_word_data - SMBus "read word" protocol

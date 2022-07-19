@@ -15,7 +15,7 @@ int main (int argc, char *argv[]){
 
 	/* ###### open the device file ###### */
 	int file;
-	int adapter_nr = 2; /* probably dynamically determined */
+	int adapter_nr = 0; /* probably dynamically determined */
 	char filename[20];
 
 	snprintf(filename, 19, "/dev/i2c-%d", adapter_nr);

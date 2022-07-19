@@ -25,7 +25,7 @@
  * This executes the SMBus "read word" protocol, returning negative errno
  * else a 16-bit unsigned "word" received from the device.
  */
-s32 i2c_smbus_read_word_data(const struct i2c_client *client, u8 command)
+__s32 i2c_smbus_read_word_data(const struct i2c_client *client, __u8 command)
 {
 	union i2c_smbus_data data;
 	int status;
@@ -72,26 +72,28 @@ int main (int argc, char *argv[]){
 	  /* res contains the read word */
 	  printf("Word read: %d\n", res);
 	}
+
+	/*
+	 * Using I2C Write, equivalent of
+	 * i2c_smbus_write_word_data(file, reg, 0x6543)
+	 */
+	buf[0] = reg;
+	buf[1] = 0x43;
+	buf[2] = 0x65;
+	if (write(file, buf, 3) != 3) {
+	  /* ERROR HANDLING: I2C transaction failed */
+	}
+
+	/* Using I2C Read, equivalent of i2c_smbus_read_byte(file) */
+	if (read(file, buf, 1) != 1) {
+	  /* ERROR HANDLING: I2C transaction failed */
+	} else {
+	  /* buf[0] contains the read byte */
+	}
 	  
 	return 0;
 
 }
 
-/*
- * Using I2C Write, equivalent of
- * i2c_smbus_write_word_data(file, reg, 0x6543)
- */
-buf[0] = reg;
-buf[1] = 0x43;
-buf[2] = 0x65;
-if (write(file, buf, 3) != 3) {
-  /* ERROR HANDLING: I2C transaction failed */
-}
 
-/* Using I2C Read, equivalent of i2c_smbus_read_byte(file) */
-if (read(file, buf, 1) != 1) {
-  /* ERROR HANDLING: I2C transaction failed */
-} else {
-  /* buf[0] contains the read byte */
-}
 

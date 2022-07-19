@@ -31,7 +31,8 @@ int main (int argc, char *argv[]){
 	if (ioctl(file, I2C_SLAVE, addr) < 0) {
 	  /* ERROR HANDLING; you can check errno to see what went wrong */
 	  exit(1);
-	  
+	}	  
+	
 	/* ###### SMBus commands ###### */
 
 	__u8 reg = 0xd0; /* Device register to access */
@@ -44,8 +45,7 @@ int main (int argc, char *argv[]){
 	  /* ERROR HANDLING: I2C transaction failed */
 	} else {
 	  /* res contains the read word */
-	}
-
+	  printf("Word read: %d\n", res);
 	}
 	  
 	return 0;

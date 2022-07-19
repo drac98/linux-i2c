@@ -15,7 +15,7 @@ int main (int argc, char *argv[]){
 
 	/* ###### open the device file ###### */
 	int file;
-	int adapter_nr = 0; /* probably dynamically determined */
+	int adapter_nr = 2; /* probably dynamically determined */
 	char filename[20];
 
 	snprintf(filename, 19, "/dev/i2c-%d", adapter_nr);
@@ -32,24 +32,23 @@ int main (int argc, char *argv[]){
 	  /* ERROR HANDLING; you can check errno to see what went wrong */
 	  exit(1);
 	  
+	/* ###### SMBus commands ###### */
+
+	__u8 reg = 0xd0; /* Device register to access */
+	__s32 res;
+	char buf[10];
+
+	/* Using SMBus commands */
+	res = i2c_smbus_read_word_data(file, reg);
+	if (res < 0) {
+	  /* ERROR HANDLING: I2C transaction failed */
+	} else {
+	  /* res contains the read word */
+	}
+
+	}
+	  
 	return 0;
-
-}
-
-
-/* ###### SMBus commands ###### */
-
-__u8 reg = 0xd0; /* Device register to access */
-__s32 res;
-char buf[10];
-
-/* Using SMBus commands */
-res = i2c_smbus_read_word_data(file, reg);
-if (res < 0) {
-  /* ERROR HANDLING: I2C transaction failed */
-} else {
-  /* res contains the read word */
-}
 
 }
 
